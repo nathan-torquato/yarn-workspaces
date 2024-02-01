@@ -1,28 +1,29 @@
-import { Car } from "@src/car";
-import { Car as SharedCar } from "@shared/models";
+import "reflect-metadata";
+import path from "node:path";
+import { ApolloServer } from "@apollo/server";
+import { startStandaloneServer } from "@apollo/server/standalone";
+import { buildSchema } from "type-graphql";
+import { RecipeResolver } from "./recipe.resolver";
 
-import express from "express";
+async function bootstrap() {
+  const PORT = Number(process.env.PORT || 38763);
 
-console.log("Hello from core-portal");
+  // Build TypeGraphQL executable schema
+  const schema = await buildSchema({
+    // Array of resolvers
+    resolvers: [RecipeResolver],
+    // Create 'schema.graphql' file with schema definition in current directory
+    emitSchemaFile: path.resolve(__dirname, "schema.graphql"),
+  });
 
-const app = express();
+  // Create GraphQL server
+  const server = new ApolloServer({ schema });
 
-app.get("/", (req, res) => {
-  res.send("Hello from core-portal");
-});
+  // Start server
+  const { url } = await startStandaloneServer(server, {
+    listen: { port: PORT },
+  });
+  console.log(`GraphQL server ready at ${url}`);
+}
 
-app.get("/local-car", (req, res) => {
-  const car = new Car("Ford", "Fiesta");
-  res.send(car);
-});
-
-app.get("/shared-car", (req, res) => {
-  const car = new SharedCar(2, "Ford", 3);
-  res.send(car);
-});
-
-const PORT = process.env.PORT || 38763;
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+bootstrap().catch(console.error);
