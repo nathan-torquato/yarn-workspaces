@@ -5,8 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "workspaces": [
-    "apps/shared",
-    "apps/core-portal"
+    "apps/*"
   ],
   "scripts": {
     "shared:dev": "yarn workspace shared run dev",
