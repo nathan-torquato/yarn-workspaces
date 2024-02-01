@@ -1,0 +1,17 @@
+{
+  "private": "true",
+  "name": "yarn-workspace-example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "workspaces": [
+    "apps/shared",
+    "apps/core-portal"
+  ],
+  "scripts": {
+    "shared:dev": "yarn workspace shared run dev",
+    "shared:build": "yarn workspace shared run build",
+    "core-portal:dev": "yarn workspace core-portal run dev",
+    "core-portal:build": "yarn workspace core-portal run build"
+  }
+}
