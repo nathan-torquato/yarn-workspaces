@@ -12,6 +12,7 @@
     "shared:dev": "yarn workspace shared run dev",
     "shared:build": "yarn workspace shared run build",
     "core-portal:dev": "yarn workspace core-portal run dev",
-    "core-portal:build": "yarn workspace core-portal run build"
+    "core-portal:build": "yarn workspace core-portal run build",
+    "core-portal:serve": "node dist/core-portal/src/index.js"
   }
 }
